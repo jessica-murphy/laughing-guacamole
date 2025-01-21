@@ -28,6 +28,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - run: pwd
+
+      - run: ls
+
       - name: Deploy tenant ${{ matrix.tenant }} to ${{ github.event.inputs.cluster }}
         uses: ./.github/workflows/deploy-content-service-tenant.yaml
         with:
