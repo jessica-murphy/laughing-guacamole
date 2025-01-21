@@ -20,6 +20,20 @@ on:
       tags:
         description: 'Image tag'
         required: true
+  workflow_call:
+    inputs:
+      cluster:
+        description: 'Select the cluster to deploy to'
+        type: string
+        required: true
+      tenant:
+        description: 'Select the tenant to deploy'
+        type: string
+        required: true
+      tags:
+        description: 'Image tag'
+        type: string
+        required: true
 
 jobs:
   deploy:
