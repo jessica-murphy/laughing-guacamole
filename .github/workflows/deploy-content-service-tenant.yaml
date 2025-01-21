@@ -1,0 +1,32 @@
+name: Deploy Content Service Tenant
+
+on:
+  workflow_dispatch:
+    inputs:
+      cluster:
+        description: 'Select the cluster to deploy to'
+        type: choice
+        required: true
+        options:
+          - datacentre_1
+          - datacentre_2
+          - datacentre_3
+      tenant:
+        description: 'Select the tenant to deploy'
+        type: choice
+        required: true
+        options:
+          - test_tenant
+      tags:
+        description: 'Image tag'
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Tenant
+        run: |
+          echo "Deploying for tenant: ${{ github.event.inputs.tenant }}"
+
+

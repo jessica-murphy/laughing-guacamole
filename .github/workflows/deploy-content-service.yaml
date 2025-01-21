@@ -1,0 +1,37 @@
+name: Deploy Content Service
+
+on:
+  workflow_dispatch:
+    inputs:
+      cluster:
+        description: 'Select the cluster to deploy to'
+        type: choice
+        required: true
+        options:
+          - datacentre_1
+          - datacentre_2
+          - datacentre_3
+      tags:
+        description: 'Image tag'
+        required: true
+
+jobs:
+  deploy-content-service:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        tenant: ['a', 'b', 'c']
+
+    steps:
+      - uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+          ref: combine-workflow # todo: remove after testing. this checks out the branch under test only but should be master for general use.
+
+      - name: Deploy tenant ${{ matrix.tenant }} to ${{ github.event.inputs.cluster }}
+        uses: ./.github/workflows/deploy-content-service-tenant.yaml
+        with:
+          cluster: ${{ github.event.inputs.cluster }}
+          tenant: ${{ matrix.tenant }}
+          tags: ${{ github.event.inputs.tags }}
