@@ -15,13 +15,6 @@ on:
         description: 'Image tag'
         required: true
 
-permissions:
-  contents: write
-  packages: write
-  checks: write
-  issues: read
-  pull-requests: write
-
 jobs:
   deploy-content-service:
     strategy:
