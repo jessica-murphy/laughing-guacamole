@@ -15,26 +15,22 @@ on:
         description: 'Image tag'
         required: true
 
+permissions:
+  contents: write
+  packages: write
+  checks: write
+  issues: read
+  pull-requests: write
+
 jobs:
   deploy-content-service:
-    runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
       matrix:
         tenant: ['a', 'b', 'c']
-
-    steps:
-      - uses: actions/checkout@v4.1.1
-        with:
-          fetch-depth: 0
-
-      - run: pwd
-
-      - run: ls
-
-      - name: Deploy tenant ${{ matrix.tenant }} to ${{ github.event.inputs.cluster }}
-        uses: ./.github/workflows/deploy-content-service-tenant.yaml
-        with:
-          cluster: ${{ github.event.inputs.cluster }}
-          tenant: ${{ matrix.tenant }}
-          tags: ${{ github.event.inputs.tags }}
+    name: Deploy tenant ${{ matrix.tenant }} to ${{ github.event.inputs.cluster }}
+    uses: ./.github/workflows/deploy-content-service-tenant.yaml
+    with:
+      cluster: ${{ github.event.inputs.cluster }}
+      tenant: ${{ matrix.tenant }}
+      tags: ${{ github.event.inputs.tags }}
