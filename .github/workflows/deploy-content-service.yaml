@@ -27,7 +27,6 @@ jobs:
       - uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
-          ref: combine-workflow # todo: remove after testing. this checks out the branch under test only but should be master for general use.
 
       - name: Deploy tenant ${{ matrix.tenant }} to ${{ github.event.inputs.cluster }}
         uses: ./.github/workflows/deploy-content-service-tenant.yaml
